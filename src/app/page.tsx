@@ -4,6 +4,7 @@ import * as React from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { usePreloaderDone } from "@/components/motion/preloader"
+import { MusicPlayer } from "@/components/motion/music-player"
 
 const TITLE_LINES = ["Hola, Soy Luis García.", "Product Engineer · Full Stack Developer"]
 
@@ -46,7 +47,7 @@ function PageFooter() {
       transition={{ duration: 0.6, delay: 1.1, ease: "easeOut" }}
     >
       <div className="flex flex-col gap-3 text-xs text-white/35 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
-        <span>© {year} Luis García</span>
+        <span>© {year} Luis García · Las Condes, RM, Chile</span>
         <div className="flex gap-6">
           <a
             href="https://linkedin.com/in/unluiscreativo"
@@ -62,10 +63,9 @@ function PageFooter() {
             rel="noopener noreferrer"
             className="transition-colors hover:text-white/70"
           >
-            @unluiscreativo
+            Instagram
           </a>
         </div>
-        <span>Las Condes, RM, Chile</span>
       </div>
     </motion.footer>
   )
@@ -90,7 +90,7 @@ function PageHeader() {
             alt="Luis García"
             width={96}
             height={18}
-            className="h-[18px] w-auto"
+            style={{ height: "18px", width: "auto" }}
           />
         </a>
         <div className="flex-1" />
@@ -112,7 +112,7 @@ export default function Home() {
 
       <main className="flex flex-1 items-center px-6 lg:px-12">
         <div className="mx-auto w-full max-w-[1920px]">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-end">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-center">
             <h1 className="text-3xl font-normal leading-[1.05] tracking-tight lg:text-5xl">
               {TITLE_LINES.map((line, lineIdx) => (
                 <span key={lineIdx} className="block">
@@ -129,7 +129,7 @@ export default function Home() {
               ))}
             </h1>
 
-            <div className="md:pb-[0.15em]">
+            <div className="flex md:justify-end">
               <ComingSoonLabel />
             </div>
           </div>
@@ -137,6 +137,7 @@ export default function Home() {
       </main>
 
       <PageFooter />
+      <MusicPlayer />
     </div>
   )
 }
