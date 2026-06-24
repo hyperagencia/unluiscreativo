@@ -5,7 +5,7 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { usePreloaderDone } from "@/components/motion/preloader"
 
-const TITLE_LINES = ["Hola, Soy Luis García.", "Product Engineer · Full Stack", "Developer"]
+const TITLE_LINES = ["Hola, Soy Luis García.", "Product Engineer · Full Stack Developer"]
 
 function BlurWord({ word, delay }: { word: string; delay: number }) {
   const ready = usePreloaderDone()
@@ -96,7 +96,7 @@ function PageHeader() {
         <div className="flex-1" />
         <a
           href="mailto:luis@hyperagencia.com"
-          className="flex items-center rounded-[8px] bg-[#383A39]/70 px-6 text-xs font-medium text-white backdrop-blur-md transition-colors duration-150 hover:bg-[#EFEFEF] hover:text-[#0a0a0a]"
+          className="flex items-center rounded-[8px] bg-[#fff414] px-6 text-xs font-medium text-[#0a0a0a] transition-colors duration-150 hover:bg-[#EFEFEF] hover:text-[#0a0a0a]"
         >
           Contacto
         </a>
