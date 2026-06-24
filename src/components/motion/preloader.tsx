@@ -3,15 +3,12 @@
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
-const PHRASE = "Si no lo sabes explicar, seguro no lo has diseñado aún"
-const WORDS = PHRASE.split(" ")
+const DEFAULT_PHRASE = "Si no lo sabes explicar, seguro no lo has diseñado aún"
 
 const START_DELAY = 0.3
 const WORD_STEP = 0.1
 const HOLD = 0.5
 const EXIT_DURATION = 0.7
-
-const REVEAL_DELAY = START_DELAY + WORDS.length * WORD_STEP + 0.6 + HOLD
 
 const PreloaderContext = React.createContext(false)
 
@@ -19,7 +16,9 @@ function usePreloaderDone() {
   return React.useContext(PreloaderContext)
 }
 
-function Preloader({ children }: { children: React.ReactNode }) {
+function Preloader({ children, phrase = DEFAULT_PHRASE }: { children: React.ReactNode; phrase?: string }) {
+  const WORDS = phrase.split(" ")
+  const revealDelay = START_DELAY + WORDS.length * WORD_STEP + 0.6 + HOLD
   const [done, setDone] = React.useState(false)
 
   React.useEffect(() => {
@@ -32,7 +31,7 @@ function Preloader({ children }: { children: React.ReactNode }) {
     const timer = setTimeout(() => {
       setDone(true)
       document.body.style.overflow = ""
-    }, REVEAL_DELAY * 1000)
+    }, revealDelay * 1000)
 
     return () => {
       clearTimeout(timer)
@@ -114,4 +113,4 @@ function FadeIn({ children, className }: RevealProps) {
   )
 }
 
-export { Preloader, Reveal, FadeIn }
+export { Preloader, Reveal, FadeIn, usePreloaderDone }
