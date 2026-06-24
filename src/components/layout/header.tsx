@@ -1,23 +1,21 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Image from "next/image"
 import { Menu, X } from "lucide-react"
-
 import { cn } from "@/lib/utils"
 
 const NAV_LINKS = [
-  { href: "/", label: "Inicio" },
-  { href: "/about", label: "Sobre mí" },
-  { href: "/work", label: "Proyectos" },
-  { href: "/contact", label: "Contacto" },
+  { href: "#sobre-mi", label: "Sobre mí" },
+  { href: "#stack", label: "Stack" },
+  { href: "#experiencia", label: "Experiencia" },
+  { href: "#proyectos", label: "Proyectos" },
+  { href: "#algo-mas", label: "Algo más" },
 ]
 
 type Surface = "dark" | "light"
 
 function Header() {
-  const pathname = usePathname()
   const [open, setOpen] = React.useState(false)
   const [surface, setSurface] = React.useState<Surface>("dark")
 
@@ -44,60 +42,69 @@ function Header() {
   const isLight = surface === "light"
 
   return (
-    <header
-      data-surface={surface}
-      className="fixed inset-x-0 top-0 z-50 transition-colors duration-300"
-    >
-      <div className="mx-auto flex h-20 w-full max-w-[1920px] items-center justify-between px-6 lg:px-10">
-        <Link
-          href="/"
-          className={cn(
-            "text-lg font-medium tracking-tight transition-colors duration-300",
-            isLight ? "text-[#0a0a0a]" : "text-foreground"
-          )}
+    <header className="fixed inset-x-0 top-4 z-50">
+      {/* Desktop */}
+      <div className="mx-auto hidden h-8 w-full max-w-[1920px] items-stretch gap-2 px-4 md:flex lg:px-6">
+        {/* Logo */}
+        <a
+          href="#"
+          className="flex shrink-0 items-center rounded-[8px] bg-[#fff414] px-4"
         >
-          LG
-        </Link>
+          <Image
+            src="/assets/logo-luis-garcia-large.svg"
+            alt="Luis García"
+            width={100}
+            height={12}
+            className="h-3 w-auto"
+          />
+        </a>
 
-        <nav className="hidden items-center gap-1 rounded-full p-1 backdrop-blur-xl transition-colors duration-300 md:flex">
+        {/* Nav — flex-1 so all items together fill remaining space */}
+        <nav className="flex flex-1 items-stretch gap-2">
           {NAV_LINKS.map((link) => (
-            <Link
+            <a
               key={link.href}
               href={link.href}
               className={cn(
-                "rounded-full px-4 py-2 text-sm transition-colors duration-300",
+                "flex flex-1 items-center justify-left px-6 rounded-[8px] text-xs backdrop-blur-md transition-colors duration-200",
                 isLight
-                  ? pathname === link.href
-                    ? "bg-[#0a0a0a]/10 text-[#0a0a0a]"
-                    : "text-[#0a0a0a]/60 hover:bg-[#0a0a0a]/10 hover:text-[#0a0a0a]"
-                  : pathname === link.href
-                    ? "bg-white/10 text-foreground"
-                    : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
+                  ? "bg-black/10 text-[#0a0a0a] hover:bg-[#0a0a0a] hover:text-white"
+                  : "bg-[#383A39]/70 text-white hover:bg-[#EFEFEF] hover:text-[#0a0a0a]"
               )}
             >
               {link.label}
-            </Link>
+            </a>
           ))}
         </nav>
 
-        <Link
-          href="/contact"
+        {/* CTA */}
+        <a
+          href="#contacto"
           className={cn(
-            "hidden rounded-full px-5 py-2.5 text-sm font-medium transition-colors duration-300 md:inline-flex",
+            "flex shrink-0 items-center rounded-[8px] px-6 text-xs font-medium transition-colors duration-200",
             isLight
-              ? "bg-[#0a0a0a] text-[#fff414]"
+              ? "bg-[#0a0a0a] text-[#fff414] hover:bg-[#0a0a0a]/85"
               : "bg-[#fff414] text-[#0a0a0a] hover:bg-[#fff414]/90"
           )}
         >
-          Contáctame
-        </Link>
+          Contacto
+        </a>
+      </div>
 
+      {/* Mobile */}
+      <div className="mx-auto flex h-14 w-full max-w-[1920px] items-center justify-between px-4 md:hidden">
+        <a href="#" className="flex items-center rounded-[12px] bg-[#fff414] px-3 py-2">
+          <Image
+            src="/assets/logo-luis-garcia-large.svg"
+            alt="Luis García"
+            width={100}
+            height={12}
+            className="h-3 w-auto"
+          />
+        </a>
         <button
           type="button"
-          className={cn(
-            "transition-colors duration-300 md:hidden",
-            isLight ? "text-[#0a0a0a]" : "text-foreground"
-          )}
+          className={cn("transition-colors duration-200", isLight ? "text-[#0a0a0a]" : "text-white")}
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
           onClick={() => setOpen((o) => !o)}
         >
@@ -105,30 +112,26 @@ function Header() {
         </button>
       </div>
 
+      {/* Mobile menu */}
       {open && (
-        <div className="mx-6 flex flex-col gap-2 rounded-3xl border border-white/6 bg-[#0a0a0a]/95 p-4 backdrop-blur-xl md:hidden">
+        <div className="mx-4 flex flex-col gap-2 rounded-2xl border border-white/6 bg-[#0a0a0a]/95 p-3 backdrop-blur-xl md:hidden">
           {NAV_LINKS.map((link) => (
-            <Link
+            <a
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className={cn(
-                "rounded-2xl border border-card-border bg-card px-4 py-3 text-sm",
-                pathname === link.href
-                  ? "text-foreground"
-                  : "text-muted-foreground"
-              )}
+              className="rounded-[10px] bg-[#383A39]/70 px-4 py-3 text-sm text-white backdrop-blur-md"
             >
               {link.label}
-            </Link>
+            </a>
           ))}
-          <Link
-            href="/contact"
+          <a
+            href="#contacto"
             onClick={() => setOpen(false)}
-            className="mt-2 rounded-full bg-[#fff414] px-5 py-3 text-center text-sm font-medium text-[#0a0a0a]"
+            className="mt-1 rounded-[10px] bg-[#fff414] px-4 py-3 text-center text-sm font-medium text-[#0a0a0a]"
           >
-            Contáctame
-          </Link>
+            Contacto
+          </a>
         </div>
       )}
     </header>
