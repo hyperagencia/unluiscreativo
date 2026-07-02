@@ -1,27 +1,29 @@
-import Link from "next/link"
-
 function Footer() {
   return (
-    <footer data-header-theme="dark" className="border-t border-white/6">
-      <div className="mx-auto flex w-full max-w-[1920px] flex-col items-center justify-between gap-4 px-6 py-10 text-sm text-muted-foreground sm:flex-row lg:px-10">
-        <span>© {new Date().getFullYear()} Luis García</span>
-        <div className="flex gap-6">
-          <Link
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-foreground"
-          >
-            GitHub
-          </Link>
-          <Link
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-foreground"
-          >
-            LinkedIn
-          </Link>
+    <footer data-header-theme="dark" className="border-t border-white/6 bg-[#0a0a0a]">
+      <div className="mx-auto w-full max-w-[1920px] px-6 py-8 lg:px-10">
+        <div className="flex flex-col items-center gap-3">
+          <nav aria-label="Redes sociales" className="flex gap-6">
+            <a
+              href="https://linkedin.com/in/unluiscreativo"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn de Luis García"
+              className="text-sm text-white/50 transition-colors duration-150 hover:text-white"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://instagram.com/unluiscreativo"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram de Luis García"
+              className="text-sm text-white/50 transition-colors duration-150 hover:text-white"
+            >
+              Instagram
+            </a>
+          </nav>
+          <span className="text-xs text-white/30">© {new Date().getFullYear()} Luis García</span>
         </div>
       </div>
     </footer>

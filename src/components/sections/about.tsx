@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { createPortal } from "react-dom"
 
@@ -9,6 +10,7 @@ import { createPortal } from "react-dom"
 interface HoverCardData {
   caption: string
   bg?: string
+  image?: string
 }
 
 interface HoverWordProps {
@@ -42,10 +44,18 @@ function HoverWord({ children, card }: HoverWordProps) {
         >
           <div className="w-[180px] overflow-hidden rounded-[10px] bg-[#1a1a1a] p-3 shadow-2xl">
             <div
-              className="flex h-[100px] w-full items-center justify-center overflow-hidden rounded-[6px]"
+              className="relative h-[100px] w-full overflow-hidden rounded-[6px]"
               style={{ background: card.bg ?? "rgba(255,255,255,0.08)" }}
             >
-              <span className="text-[10px] text-white/30 uppercase tracking-widest">imagen</span>
+              {card.image ? (
+                <Image
+                  src={card.image}
+                  alt={card.caption}
+                  fill
+                  sizes="180px"
+                  className="object-cover"
+                />
+              ) : null}
             </div>
             <p className="mt-2 text-[11px] leading-snug text-white/50">{card.caption}</p>
           </div>
@@ -81,6 +91,7 @@ export function About() {
     <div ref={ref}>
       <motion.section
         data-header-theme="light"
+        id="sobre-mi"
         className="bg-[#fff414] px-8 py-32 lg:px-14 lg:py-48"
         style={{ borderRadius: radius, marginInline }}
       >
@@ -88,11 +99,11 @@ export function About() {
         <div className="w-full md:w-[70%] space-y-8 text-2xl font-normal leading-snug text-[#1a1a0a] lg:text-[1.9rem]">
           <p>
             Soy desarrollador Full Stack con más de 8 años construyendo{" "}
-            <HoverWord card={{ caption: "Productos que van de la arquitectura hasta la interfaz", bg: "rgba(26,26,10,0.12)" }}>
+            <HoverWord card={{ caption: "Diseño de productos", bg: "rgba(26,26,10,0.12)", image: "/assets/projects/art-stgo-cover.jpg" }}>
               productos digitales
             </HoverWord>
             , con un background profundo en{" "}
-            <HoverWord card={{ caption: "UI, UX y dirección creativa", bg: "rgba(26,26,10,0.12)" }}>
+            <HoverWord card={{ caption: "UI, UX y Diseño de Productos", bg: "rgba(26,26,10,0.12)", image: "/assets/projects/general-focus.jpg" }}>
               diseño
             </HoverWord>
             .
@@ -101,7 +112,7 @@ export function About() {
           <p>
             He liderado proyectos para marcas en hotelería, retail, telecomunicaciones, minería y
             entretenimiento. Soy fundador de{" "}
-            <HoverWord card={{ caption: "Hyper™ — Branding & Digital Agency", bg: "#fff414" }}>
+            <HoverWord card={{ caption: "Hyper™ Branding Agency", bg: "#fff414", image: "/assets/hyper.jpg" }}>
               Hyper™
             </HoverWord>
             , donde opero como desarrollador y product owner.
