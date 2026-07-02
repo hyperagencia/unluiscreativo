@@ -14,6 +14,17 @@ export function startLenis() {
   lenisInstance?.start()
 }
 
+export function scrollToAnchor(href: string) {
+  if (href === "#" || href === "") {
+    lenisInstance?.scrollTo(0, { duration: 1.4 })
+    return
+  }
+  const target = document.querySelector(href)
+  if (target) {
+    lenisInstance?.scrollTo(target as HTMLElement, { duration: 1.4, offset: -72 })
+  }
+}
+
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     const lenis = new Lenis({

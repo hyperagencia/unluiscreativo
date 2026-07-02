@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { createPortal } from "react-dom"
 import { stopLenis, startLenis } from "@/components/motion/smooth-scroll"
@@ -136,9 +137,14 @@ function ExperienceContent() {
 function SobreMiContent() {
   return (
     <div className="flex flex-col gap-8">
-      {/* Photo placeholder 4:3 */}
-      <div className="aspect-4/3 w-full overflow-hidden rounded-[12px] bg-white/10 flex items-center justify-center">
-        <span className="text-xs text-white/20 uppercase tracking-widest">foto</span>
+      <div className="relative aspect-4/3 w-full overflow-hidden rounded-[12px]">
+        <Image
+          src="/assets/luis-pp2.jpg"
+          alt="Luis García"
+          fill
+          sizes="(max-width: 768px) 100vw, 40vw"
+          className="object-cover"
+        />
       </div>
 
       {/* Datos personales */}
@@ -147,7 +153,7 @@ function SobreMiContent() {
         <div className="space-y-1 text-sm text-white/60">
           <p>18/08/1992 (33 años)</p>
           <p>luis@hyperagencia.com</p>
-          <p>Llámame aquí · Ubicación: Las Condes</p>
+          <p><a href="tel:+56956004615" className="text-white/60 hover:text-white cursor-pointer">Llámame aquí</a> · Ubicación: Las Condes</p>
         </div>
       </div>
 
@@ -180,6 +186,7 @@ interface DrawerProps {
 function Drawer({ open, onClose, children }: DrawerProps) {
   const [mounted, setMounted] = React.useState(false)
   const panelRef = React.useRef<HTMLDivElement>(null)
+  const mobilePanelRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => { setMounted(true) }, [])
 
@@ -187,12 +194,15 @@ function Drawer({ open, onClose, children }: DrawerProps) {
     if (open) {
       stopLenis()
 
-      // Intercept wheel events before Lenis (capture phase) and
-      // redirect them to the panel so native scroll works.
       const onWheel = (e: WheelEvent) => {
-        if (panelRef.current?.contains(e.target as Node)) {
+        const desktop = panelRef.current
+        const mobile = mobilePanelRef.current
+        if (desktop?.contains(e.target as Node)) {
           e.stopPropagation()
-          panelRef.current.scrollTop += e.deltaY
+          desktop.scrollTop += e.deltaY
+        } else if (mobile?.contains(e.target as Node)) {
+          e.stopPropagation()
+          mobile.scrollTop += e.deltaY
         }
       }
       window.addEventListener("wheel", onWheel, { capture: true, passive: false })
@@ -244,13 +254,14 @@ function Drawer({ open, onClose, children }: DrawerProps) {
 
           {/* Mobile drawer (full screen) */}
           <motion.div
-            className="fixed inset-0 z-[100] flex flex-col overflow-y-auto bg-[#2f2f2f] p-6 md:hidden"
+            className="fixed inset-0 z-[100] flex flex-col bg-[#2f2f2f] md:hidden"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="flex justify-end mb-6">
+            {/* Close button — fixed at top, always visible */}
+            <div className="flex shrink-0 justify-end p-6 pb-0">
               <button
                 onClick={onClose}
                 className="group rounded-[15px] bg-[#fff414] p-2.5 text-[#0a0a0a] transition-colors duration-150 hover:bg-[#0a0a0a] hover:text-[#fff414]"
@@ -259,7 +270,11 @@ function Drawer({ open, onClose, children }: DrawerProps) {
                 <CloseIcon className="size-5" />
               </button>
             </div>
-            {children}
+
+            {/* Scrollable content */}
+            <div ref={mobilePanelRef} className="flex-1 overflow-y-auto p-6 pt-4">
+              {children}
+            </div>
           </motion.div>
         </>
       )}
@@ -282,7 +297,7 @@ function CardItem({ title, description, onClick }: CardItemProps) {
   return (
     <button
       onClick={onClick}
-      className="group flex min-h-[260px] w-full flex-col justify-between rounded-[20px] bg-[#2f2f2f] p-[5%] text-left transition-colors duration-200 hover:bg-[#fff414]"
+      className="group cursor-pointer flex min-h-[260px] w-full flex-col justify-between rounded-[20px] bg-[#2f2f2f] p-[5%] text-left transition-colors duration-200 hover:bg-[#fff414]"
     >
       <div className="flex items-start justify-between">
         <h3 className="text-3xl font-normal text-white transition-colors duration-200 group-hover:text-[#0a0a0a]">
@@ -290,7 +305,7 @@ function CardItem({ title, description, onClick }: CardItemProps) {
         </h3>
         <ArrowIcon className="size-8 shrink-0 text-[#fff414] transition-colors duration-200 group-hover:text-[#0a0a0a]" />
       </div>
-      <p className="max-w-[300px] text-lg text-white/50 transition-colors duration-200 group-hover:text-[#0a0a0a]/70">
+      <p className="max-w-[300px] text-lg text-white/70 transition-colors duration-200 group-hover:text-[#0a0a0a]/70">
         {description}
       </p>
     </button>
@@ -303,7 +318,7 @@ export function CardsGrid() {
   const [open, setOpen] = React.useState<"sobre-mi" | "stack" | "experiencia" | null>(null)
 
   return (
-    <section className="px-4 py-6 lg:px-6">
+    <section id="cards" className="px-4 py-6 lg:px-6">
       <div className="mx-auto grid w-full max-w-[1920px] grid-cols-1 gap-4 md:grid-cols-3">
         <CardItem
           title="Un poco sobre mí"

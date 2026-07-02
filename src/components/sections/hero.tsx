@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 import { SkipBack, Play, SkipForward } from "lucide-react"
 import { usePreloaderDone } from "@/components/motion/preloader"
 
-const TITLE_LINES = ["Hola, Soy Luis García.", "Product Engineer · Full Stack", "Developer"]
+const TITLE_LINES = ["Hola, Soy Luis García.", "Product Engineer · Full Stack Developer"]
 
 function MusicPlayerStub() {
   return (
@@ -29,6 +29,7 @@ export function Hero() {
 
   return (
     <section
+      id="hero"
       data-header-theme="dark"
       className="relative min-h-screen overflow-hidden"
     >
@@ -66,7 +67,7 @@ export function Hero() {
             <p className="max-w-[280px] text-lg leading-snug text-white/50 sm:text-xl">
               Creo que si no lo sabes explicar, seguro no lo has diseñado aún.
             </p>
-             <MusicPlayerStub /> 
+             {/* <MusicPlayerStub />  */}
           </div>
         </div>
 

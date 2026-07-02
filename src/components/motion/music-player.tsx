@@ -17,6 +17,8 @@ export function MusicPlayer() {
   const ready = usePreloaderDone()
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [heights, setHeights] = React.useState(() => Array(BARS).fill(0.1))
+  const [atTop, setAtTop] = React.useState(true)
+  const [menuOpen, setMenuOpen] = React.useState(false)
 
   const [play, { pause, sound }] = useSound(AUDIO_SRC, {
     loop: true,
@@ -25,6 +27,18 @@ export function MusicPlayer() {
     onpause: () => setIsPlaying(false),
     onstop: () => setIsPlaying(false),
   })
+
+  React.useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY === 0)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  React.useEffect(() => {
+    const onMenu = (e: Event) => setMenuOpen((e as CustomEvent<{ open: boolean }>).detail.open)
+    window.addEventListener("mobilemenu", onMenu)
+    return () => window.removeEventListener("mobilemenu", onMenu)
+  }, [])
 
   React.useEffect(() => {
     if (!isPlaying) {
@@ -46,48 +60,75 @@ export function MusicPlayer() {
 
   return (
     <motion.div
-      className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 md:right-auto md:left-1/2 md:-translate-x-1/2 md:items-center"
+      className="fixed bottom-6 z-50 flex flex-col items-center gap-2"
       initial={{ opacity: 0, y: 24 }}
-      animate={ready ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
+      animate={
+        ready
+          ? {
+              opacity: menuOpen ? 0 : 1,
+              y: menuOpen ? 16 : 0,
+              pointerEvents: menuOpen ? "none" : "auto",
+              left: atTop ? "50%" : "auto",
+              right: atTop ? "auto" : "24px",
+              x: atTop ? "-50%" : "0%",
+            }
+          : { opacity: 0, y: 24 }
+      }
+      transition={{
+        opacity: { duration: menuOpen ? 0.3 : (ready ? 0.6 : 0.3), delay: ready && !menuOpen ? 1.4 : 0 },
+        y: { duration: menuOpen ? 0.3 : (ready ? 0.6 : 0.3), delay: ready && !menuOpen ? 1.4 : 0 },
+        left: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+        right: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+        x: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+      }}
     >
-      <div className="w-52 overflow-hidden rounded-[10px] bg-[#2f2f2f]/80 px-3 py-1.5 backdrop-blur-md">
-        <AnimatePresence mode="wait">
-          {isPlaying ? (
-            <motion.div
-              key="ticker"
-              className="overflow-hidden"
-              style={{
-                maskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
-                WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
-              }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <motion.p
-                className="whitespace-nowrap text-[10px] text-white/50"
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{ repeat: Infinity, duration: 16, ease: "linear" }}
-              >
-                {SONG_LABEL + SONG_LABEL}
-              </motion.p>
-            </motion.div>
-          ) : (
-            <motion.p
-              key="prompt"
-              className="text-[10px] text-white/40"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              Escucha algo de música
-            </motion.p>
-          )}
-        </AnimatePresence>
-      </div>
+      <AnimatePresence>
+        {atTop && (
+          <motion.div
+            className="w-52 overflow-hidden rounded-[10px] bg-[#2f2f2f]/80 px-3 py-1.5 backdrop-blur-md"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 6 }}
+            transition={{ duration: 0.3 }}
+          >
+            <AnimatePresence mode="wait">
+              {isPlaying ? (
+                <motion.div
+                  key="ticker"
+                  className="overflow-hidden"
+                  style={{
+                    maskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
+                    WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
+                  }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.p
+                    className="whitespace-nowrap text-[10px] text-white/50"
+                    animate={{ x: ["0%", "-50%"] }}
+                    transition={{ repeat: Infinity, duration: 16, ease: "linear" }}
+                  >
+                    {SONG_LABEL + SONG_LABEL}
+                  </motion.p>
+                </motion.div>
+              ) : (
+                <motion.p
+                  key="prompt"
+                  className="text-[10px] text-white/40"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  Escucha algo de música
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <motion.button
         onClick={handleClick}
