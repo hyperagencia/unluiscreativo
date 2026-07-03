@@ -4,6 +4,7 @@ import * as React from "react"
 import Image from "next/image"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { createPortal } from "react-dom"
+import { useTranslations } from "next-intl"
 
 /* ─── Stacked photos ─────────────────────────────────── */
 
@@ -146,6 +147,7 @@ function HoverWord({ children, card }: HoverWordProps) {
 /* ─── Section ────────────────────────────────────────── */
 
 export function AlgoMasSection() {
+  const t = useTranslations("algomas")
   const ref = React.useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
   const radius = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 24, 24, 0])
@@ -161,42 +163,59 @@ export function AlgoMasSection() {
         <div className="mx-auto w-full max-w-[1920px]">
           <div className="w-full md:w-[70%] space-y-22 text-2xl font-normal leading-snug text-white lg:text-[1.9rem]">
             <p>
-              También{" "}
-              <HoverWord card={{ caption: "Ver en Strava", type: "image", href: "https://www.strava.com/athletes/97030991", src: "/assets/luis-pp.jpg" }}>
-                corro
-              </HoverWord>
-              ,{" "}
-              <HoverWord card={{ caption: "Guitarra, Piano, Canto", type: "image", src: "/assets/luis-pp3.jpg" }}>
-                hago música
-              </HoverWord>
-              ,{" "}
-              <HoverWord
-                card={{
-                  caption: "Ver fotografías",
-                  type: "stack",
-                  href: "https://www.pexels.com/es-es/@aluislens/",
-                  stackImages: [
-                    "/assets/fotos/p1.jpg",
-                    "/assets/fotos/p2.jpg",
-                    "/assets/fotos/p3.jpg",
-                  ],
-                }}
-              >
-                fotografío
-              </HoverWord>
-              ,{" "}
-              <HoverWord
-                card={{
-                  caption: "Film & edición",
-                  type: "video",
-                  src: "/assets/film-luis.webm",
-                }}
-              >
-                filmo cosas
-              </HoverWord>
-              , y más. Me he dado cuenta que todo eso eventualmente termina influyendo en cómo construyo algo.
+              {t.rich("p", {
+                run: (chunks) => (
+                  <HoverWord
+                    card={{
+                      caption: t("run_caption"),
+                      type: "image",
+                      href: "https://www.strava.com/athletes/97030991",
+                      src: "/assets/luis-pp.jpg",
+                    }}
+                  >
+                    {chunks}
+                  </HoverWord>
+                ),
+                music: (chunks) => (
+                  <HoverWord
+                    card={{
+                      caption: t("music_caption"),
+                      type: "image",
+                      src: "/assets/luis-pp3.jpg",
+                    }}
+                  >
+                    {chunks}
+                  </HoverWord>
+                ),
+                photo: (chunks) => (
+                  <HoverWord
+                    card={{
+                      caption: t("photo_caption"),
+                      type: "stack",
+                      href: "https://www.pexels.com/es-es/@aluislens/",
+                      stackImages: [
+                        "/assets/fotos/p1.jpg",
+                        "/assets/fotos/p2.jpg",
+                        "/assets/fotos/p3.jpg",
+                      ],
+                    }}
+                  >
+                    {chunks}
+                  </HoverWord>
+                ),
+                film: (chunks) => (
+                  <HoverWord
+                    card={{
+                      caption: t("film_caption"),
+                      type: "video",
+                      src: "/assets/film-luis.webm",
+                    }}
+                  >
+                    {chunks}
+                  </HoverWord>
+                ),
+              })}
             </p>
-
           </div>
         </div>
       </motion.section>

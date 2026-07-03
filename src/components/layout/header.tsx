@@ -3,17 +3,52 @@
 import * as React from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
+import { useLocale, useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { scrollToAnchor } from "@/components/motion/smooth-scroll"
+import { usePathname, useRouter } from "@/i18n/navigation"
 
-const NAV_LINKS = [
-  { href: "#", label: "Home" },
-  { href: "#sobre-mi", label: "Sobre mí" },
-  { href: "#cards", label: "Stack" },
-  { href: "#cards", label: "Experiencia" },
-  { href: "#proyectos", label: "Proyectos" },
-  { href: "#algo-mas", label: "Algo más" },
-]
+/* ─── Language switcher ──────────────────────────────── */
+
+function LanguageSwitcher({ surface }: { surface: "dark" | "light" }) {
+  const locale = useLocale()
+  const pathname = usePathname()
+  const router = useRouter()
+
+  const switchLocale = (next: string) => {
+    router.replace(pathname, { locale: next })
+  }
+
+  const activeClass = surface === "light"
+    ? "text-[#0a0a0a] font-medium"
+    : "text-white font-medium"
+  const inactiveClass = surface === "light"
+    ? "text-[#0a0a0a]/40 hover:text-[#0a0a0a]"
+    : "text-white/40 hover:text-white"
+  const separatorClass = surface === "light"
+    ? "text-[#0a0a0a]/20"
+    : "text-white/20"
+
+  return (
+    <div className="flex items-center gap-1 text-xs">
+      <button
+        onClick={() => switchLocale("es")}
+        className={cn("transition-colors duration-150 cursor-pointer", locale === "es" ? activeClass : inactiveClass)}
+      >
+        ES
+      </button>
+      <span className={separatorClass}>/</span>
+      <button
+        onClick={() => switchLocale("en")}
+        className={cn("transition-colors duration-150 cursor-pointer", locale === "en" ? activeClass : inactiveClass)}
+      >
+        EN
+      </button>
+    </div>
+  )
+}
+
+/* ─── Icons ──────────────────────────────────────────── */
 
 function GridIcon() {
   return (
@@ -39,11 +74,27 @@ function CloseIcon() {
   )
 }
 
+/* ─── Header ─────────────────────────────────────────── */
+
 type Surface = "dark" | "light"
 
 function Header() {
+  const t = useTranslations("nav")
+  const locale = useLocale()
+  const pathname = usePathname()
+  const router = useRouter()
+
   const [open, setOpen] = React.useState(false)
   const [surface, setSurface] = React.useState<Surface>("dark")
+
+  const navLinks = [
+    { href: "#", label: t("home") },
+    { href: "#sobre-mi", label: t("about") },
+    { href: "#cards", label: t("stack") },
+    { href: "#cards", label: t("experience") },
+    { href: "#proyectos", label: t("projects") },
+    { href: "#algo-mas", label: t("algomas") },
+  ]
 
   React.useEffect(() => {
     const sections = document.querySelectorAll<HTMLElement>("[data-header-theme]")
@@ -65,7 +116,6 @@ function Header() {
     return () => observer.disconnect()
   }, [])
 
-  // Lock body scroll + notify other components
   React.useEffect(() => {
     document.body.style.overflow = open ? "hidden" : ""
     window.dispatchEvent(new CustomEvent("mobilemenu", { detail: { open } }))
@@ -77,6 +127,11 @@ function Header() {
   const handleNav = (href: string) => {
     setOpen(false)
     setTimeout(() => scrollToAnchor(href), 300)
+  }
+
+  const switchLocale = (next: string) => {
+    setOpen(false)
+    router.replace(pathname, { locale: next })
   }
 
   return (
@@ -98,7 +153,7 @@ function Header() {
           </button>
 
           <nav className="flex flex-1 items-stretch gap-2">
-            {NAV_LINKS.map((link) => (
+            {navLinks.map((link) => (
               <button
                 key={link.label}
                 onClick={() => scrollToAnchor(link.href)}
@@ -123,8 +178,16 @@ function Header() {
                 : "bg-[#fff414] text-[#0a0a0a] hover:bg-[#fff414]/90"
             )}
           >
-            Contacto
+            {t("contact")}
           </a>
+
+          {/* Language switcher desktop */}
+          <div className={cn(
+            "flex shrink-0 items-center rounded-[8px] px-3 backdrop-blur-md",
+            isLight ? "bg-black/10" : "bg-[#383A39]/70"
+          )}>
+            <LanguageSwitcher surface={surface} />
+          </div>
         </div>
 
         {/* Mobile bar */}
@@ -140,7 +203,7 @@ function Header() {
           </button>
           <button
             type="button"
-            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-label={open ? t("close_menu") : t("open_menu")}
             onClick={() => setOpen((o) => !o)}
             className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-[#0a0a0a] text-[#fff414] transition-colors duration-200 cursor-pointer"
           >
@@ -183,7 +246,7 @@ function Header() {
           >
             {/* Nav items */}
             <div className="flex flex-1 flex-col justify-center gap-2 px-4 pt-28 pb-8">
-              {NAV_LINKS.map((link, i) => (
+              {navLinks.map((link, i) => (
                 <motion.button
                   key={link.label}
                   onClick={() => handleNav(link.href)}
@@ -196,6 +259,29 @@ function Header() {
                   <span className="text-white/20 text-sm">↗</span>
                 </motion.button>
               ))}
+
+              {/* Language switcher mobile */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: navLinks.length * 0.05 + 0.1, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="flex gap-2"
+              >
+                {["es", "en"].map((loc) => (
+                  <button
+                    key={loc}
+                    onClick={() => switchLocale(loc)}
+                    className={cn(
+                      "flex-1 rounded-[14px] py-4 text-center text-base font-normal transition-colors duration-150 cursor-pointer",
+                      locale === loc
+                        ? "bg-[#fff414] text-[#0a0a0a]"
+                        : "bg-[#191919] text-white/50"
+                    )}
+                  >
+                    {loc.toUpperCase()}
+                  </button>
+                ))}
+              </motion.div>
             </div>
 
             {/* CTA fijo abajo */}
@@ -203,14 +289,14 @@ function Header() {
               className="px-4 pb-8"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 0.4, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
               <a
                 href="mailto:luis@hyperagencia.com"
                 onClick={() => setOpen(false)}
                 className="block w-full rounded-[14px] bg-[#fff414] py-5 text-center text-base font-medium text-[#0a0a0a]"
               >
-                Contacto
+                {t("contact")}
               </a>
             </motion.div>
           </motion.div>

@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "Sobre mí",
+    "stack": "Stack",
+    "experience": "Experiencia",
+    "projects": "Proyectos",
+    "algomas": "Algo más",
+    "contact": "Contacto",
+    "close_menu": "Cerrar menú",
+    "open_menu": "Abrir menú"
+  },
+  "hero": {
+    "line1": "Hola, Soy Luis García.",
+    "line2": "Product Engineer · Full Stack Developer",
+    "tagline": "Creo que si no lo sabes explicar, seguro no lo has diseñado aún."
+  },
+  "about": {
+    "p1": "Soy desarrollador Full Stack con más de 8 años construyendo <products>productos digitales</products>, con un background profundo en <design>diseño</design>.",
+    "p1_products_caption": "Diseño de productos",
+    "p1_design_caption": "UI, UX y Diseño de Productos",
+    "p2": "He liderado proyectos para marcas en hotelería, retail, telecomunicaciones, minería y entretenimiento. Soy fundador de <hyper>Hyper™</hyper>, donde opero como desarrollador y product owner.",
+    "p2_hyper_caption": "Hyper™ Branding Agency",
+    "p3": "Lo que más me define es que en mis proyectos todo converge: marcas que funcionan, interfaces que se sienten bien y tecnologías que sostienen todo eso."
+  },
+  "cards": {
+    "about_title": "Un poco sobre mí",
+    "about_desc": "Datos personales e información sobre estudios académicos",
+    "stack_title": "Stack",
+    "stack_desc": "Tecnologías en las que he tenido experiencias y las que uso día a día",
+    "experience_title": "Experiencia laboral",
+    "experience_desc": "Trayectoria profesional y empresas donde he trabajado",
+    "close": "Cerrar"
+  },
+  "drawer_about": {
+    "personal_title": "Datos personales",
+    "dob": "18/08/1992 (33 años)",
+    "call": "Llámame aquí",
+    "location": "Ubicación: Las Condes",
+    "studies_title": "Estudios",
+    "degree1_title": "Lic. Análisis de Sistemas",
+    "degree1_school": "Universidad Nacional Experimental de Guayana (UNEG), Venezuela (2009–2014)",
+    "degree2_title": "Diseño Gráfico",
+    "degree2_school": "Instituto Tecnológico Amazonas (IAMZ), Pto. Ordaz, Venezuela (2011–2015)"
+  },
+  "projects": {
+    "section_title": "Proyectos recientes"
+  },
+  "stats": {
+    "label0": "Años construyendo productos digitales",
+    "label1": "Proyectos entregados",
+    "label2": "Empresas e industrias",
+    "label3": "Años liderando Hyper"
+  },
+  "algomas": {
+    "p": "También <run>corro</run>, <music>hago música</music>, <photo>fotografío</photo>, <film>filmo cosas</film>, y más. Me he dado cuenta que todo eso eventualmente termina influyendo en cómo construyo algo.",
+    "run_caption": "Ver en Strava",
+    "music_caption": "Guitarra, Piano, Canto",
+    "photo_caption": "Ver fotografías",
+    "film_caption": "Film & edición"
+  },
+  "cta": {
+    "text": "Trabajemos juntos en algo genial, yo invito el café.",
+    "button": "Contáctame"
+  },
+  "footer": {
+    "social_label": "Redes sociales",
+    "linkedin_label": "LinkedIn de Luis García",
+    "instagram_label": "Instagram de Luis García"
+  },
+  "meta": {
+    "title": "Luis García — Product Engineer · Full Stack Developer",
+    "description": "Portfolio de Luis García, Product Engineer y Full Stack Developer en Santiago, Chile. Desarrollo web, e-commerce y diseño de producto end-to-end."
+  }
+}

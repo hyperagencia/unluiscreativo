@@ -6,7 +6,7 @@ export interface ExperienceItem {
   current?: boolean
 }
 
-export const experience: ExperienceItem[] = [
+const experienceES: ExperienceItem[] = [
   {
     company: "AIDA Performance",
     role: "Full Stack Developer & UI Designer",
@@ -40,3 +40,44 @@ export const experience: ExperienceItem[] = [
     period: "Ene 2013 – Presente",
   },
 ]
+
+const experienceEN: ExperienceItem[] = [
+  {
+    company: "AIDA Performance",
+    role: "Full Stack Developer & UI Designer",
+    period: "Aug 2023 – Present",
+    current: true,
+    description:
+      "Built and launched websites for brands including Cumbres Hotels, Patio Bellavista, Mining, and Architecture clients. Developed an internal UGC management app in Vite.js, later migrated to Next.js. Designed a monorepo architecture in Next.js for multiple brands with shared components and a unified design system. Third-party integrations, booking platforms, and analytics. E-commerce / Shopify.",
+  },
+  {
+    company: "Figmenta",
+    role: "Full Stack Developer & UI Designer",
+    period: "May 2024 – Dec 2024 · Remote, Milan",
+    description:
+      "UI component development and implementation for European client projects. Asynchronous remote work within an international team.",
+  },
+  {
+    company: "Probel SpA",
+    role: "Art Director & Web Developer",
+    period: "Jun 2021 – Aug 2023",
+    description:
+      "Managed the digital and creative ecosystem of three simultaneous brands. Developed and maintained websites and e-commerce stores on WordPress and Shopify. Branding: concept, design, development, and rollout. Motion graphics and video for brand activations.",
+  },
+  {
+    company: "Claro Chile SpA",
+    role: "UI Designer / Frontend Stack",
+    period: "Sep 2019 – Nov 2019",
+  },
+  {
+    company: "Hyper™ Branding Agency",
+    role: "Founder & Full Stack Developer",
+    period: "Jan 2013 – Present",
+  },
+]
+
+export function getExperience(locale: string): ExperienceItem[] {
+  return locale === "en" ? experienceEN : experienceES
+}
+
+export const experience = experienceES

@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "stack": "Stack",
+    "experience": "Experience",
+    "projects": "Projects",
+    "algomas": "More",
+    "contact": "Contact",
+    "close_menu": "Close menu",
+    "open_menu": "Open menu"
+  },
+  "hero": {
+    "line1": "Hi, I'm Luis García.",
+    "line2": "Product Engineer · Full Stack Developer",
+    "tagline": "If you can't explain it, you probably haven't designed it yet."
+  },
+  "about": {
+    "p1": "I'm a Full Stack developer with 8+ years building <products>digital products</products>, with a deep background in <design>design</design>.",
+    "p1_products_caption": "Product Design",
+    "p1_design_caption": "UI, UX & Product Design",
+    "p2": "I've led projects for brands in hospitality, retail, telecom, mining, and entertainment. I'm the founder of <hyper>Hyper™</hyper>, where I operate as developer and product owner.",
+    "p2_hyper_caption": "Hyper™ Branding Agency",
+    "p3": "What defines me most is that everything converges in my work: brands that function, interfaces that feel right, and technologies that sustain it all."
+  },
+  "cards": {
+    "about_title": "A bit about me",
+    "about_desc": "Personal details and academic background",
+    "stack_title": "Stack",
+    "stack_desc": "Technologies I've worked with and use on a daily basis",
+    "experience_title": "Work experience",
+    "experience_desc": "Professional background and companies I've worked with",
+    "close": "Close"
+  },
+  "drawer_about": {
+    "personal_title": "Personal details",
+    "dob": "08/18/1992 (33 years old)",
+    "call": "Call me here",
+    "location": "Location: Las Condes, Santiago",
+    "studies_title": "Education",
+    "degree1_title": "B.S. Systems Analysis",
+    "degree1_school": "Universidad Nacional Experimental de Guayana (UNEG), Venezuela (2009–2014)",
+    "degree2_title": "Graphic Design",
+    "degree2_school": "Instituto Tecnológico Amazonas (IAMZ), Venezuela (2011–2015)"
+  },
+  "projects": {
+    "section_title": "Recent projects"
+  },
+  "stats": {
+    "label0": "Years building digital products",
+    "label1": "Projects delivered",
+    "label2": "Companies & industries",
+    "label3": "Years leading Hyper"
+  },
+  "algomas": {
+    "p": "I also <run>run</run>, <music>make music</music>, <photo>take photos</photo>, <film>film things</film>, and more. I've realized that all of it eventually ends up influencing how I build something.",
+    "run_caption": "See on Strava",
+    "music_caption": "Guitar, Piano, Vocals",
+    "photo_caption": "See photos",
+    "film_caption": "Film & editing"
+  },
+  "cta": {
+    "text": "Let's build something great together — coffee's on me.",
+    "button": "Get in touch"
+  },
+  "footer": {
+    "social_label": "Social networks",
+    "linkedin_label": "Luis García on LinkedIn",
+    "instagram_label": "Luis García on Instagram"
+  },
+  "meta": {
+    "title": "Luis García — Product Engineer · Full Stack Developer",
+    "description": "Portfolio of Luis García, Product Engineer and Full Stack Developer based in Santiago, Chile. Web development, e-commerce, and end-to-end product design."
+  }
+}
