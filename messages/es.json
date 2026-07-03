@@ -68,6 +68,14 @@
     "linkedin_label": "LinkedIn de Luis García",
     "instagram_label": "Instagram de Luis García"
   },
+  "preloader": {
+    "phrase": "Si no lo sabes explicar, seguro no lo has diseñado aún"
+  },
+  "music": {
+    "prompt": "Escucha algo de música",
+    "play": "Reproducir música",
+    "pause": "Pausar música"
+  },
   "meta": {
     "title": "Luis García — Product Engineer · Full Stack Developer",
     "description": "Portfolio de Luis García, Product Engineer y Full Stack Developer en Santiago, Chile. Desarrollo web, e-commerce y diseño de producto end-to-end."

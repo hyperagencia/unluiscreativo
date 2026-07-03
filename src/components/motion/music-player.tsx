@@ -3,6 +3,7 @@
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import useSound from "use-sound"
+import { useTranslations } from "next-intl"
 import { usePreloaderDone } from "@/components/motion/preloader"
 
 const BARS = 5
@@ -14,6 +15,7 @@ function randomHeights() {
 }
 
 export function MusicPlayer() {
+  const t = useTranslations("music")
   const ready = usePreloaderDone()
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [heights, setHeights] = React.useState(() => Array(BARS).fill(0.1))
@@ -122,7 +124,7 @@ export function MusicPlayer() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  Escucha algo de música
+                  {t("prompt")}
                 </motion.p>
               )}
             </AnimatePresence>
@@ -132,7 +134,7 @@ export function MusicPlayer() {
 
       <motion.button
         onClick={handleClick}
-        aria-label={isPlaying ? "Pausar música" : "Reproducir música"}
+        aria-label={isPlaying ? t("pause") : t("play")}
         initial={{ padding: "14px 14px" }}
         whileHover={{ padding: "18px 22px" }}
         whileTap={{ padding: "16px 20px" }}
