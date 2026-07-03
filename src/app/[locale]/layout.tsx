@@ -62,12 +62,13 @@ export default async function LocaleLayout({
   const { locale } = await params
   setRequestLocale(locale)
   const messages = await getMessages()
+  const tPreloader = await getTranslations({ locale, namespace: "preloader" })
 
   return (
     <NextIntlClientProvider messages={messages}>
       <Analytics />
       <SmoothScroll>
-        <Preloader>
+        <Preloader phrase={tPreloader("phrase")}>
           <FadeIn>
             <Header />
           </FadeIn>
