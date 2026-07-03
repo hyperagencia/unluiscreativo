@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useTranslations } from "next-intl"
 
 /* ─── Coffee button ──────────────────────────────────── */
 
@@ -12,6 +13,7 @@ interface CoffeeParticle {
 }
 
 function ContactButton() {
+  const t = useTranslations("cta")
   const [particles, setParticles] = React.useState<CoffeeParticle[]>([])
   const counterRef = React.useRef(0)
   const timerRefs = React.useRef<ReturnType<typeof setTimeout>[]>([])
@@ -58,7 +60,7 @@ function ContactButton() {
         onMouseEnter={spawnParticles}
         className="inline-flex items-center rounded-[8px] bg-[#fff414] px-6 py-2 text-xs font-medium text-[#0a0a0a] transition-colors duration-200 hover:bg-[#fff414]/80"
       >
-        Contáctame
+        {t("button")}
       </a>
     </div>
   )
@@ -67,12 +69,14 @@ function ContactButton() {
 /* ─── CTA Section ────────────────────────────────────── */
 
 export function CtaSection() {
+  const t = useTranslations("cta")
+
   return (
     <section data-header-theme="dark" className="bg-[#0a0a0a] px-8 py-32 lg:px-14 lg:py-40">
       <div className="mx-auto w-full max-w-[1920px]">
         <div className="flex flex-col gap-6">
           <p className="text-2xl font-normal leading-snug text-white lg:text-[1.9rem]">
-            Trabajemos juntos en algo genial, yo invito el café.
+            {t("text")}
           </p>
           <ContactButton />
         </div>

@@ -4,6 +4,7 @@ import * as React from "react"
 import Image from "next/image"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { createPortal } from "react-dom"
+import { useTranslations } from "next-intl"
 
 /* ─── Hover card ─────────────────────────────────────── */
 
@@ -82,6 +83,7 @@ function HoverWord({ children, card }: HoverWordProps) {
 /* ─── About section ──────────────────────────────────── */
 
 export function About() {
+  const t = useTranslations("about")
   const ref = React.useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
   const radius = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 24, 24, 0])
@@ -96,33 +98,52 @@ export function About() {
         style={{ borderRadius: radius, marginInline }}
       >
         <div className="mx-auto w-full max-w-[1920px]">
-        <div className="w-full md:w-[70%] space-y-8 text-2xl font-normal leading-snug text-[#1a1a0a] lg:text-[1.9rem]">
-          <p>
-            Soy desarrollador Full Stack con más de 8 años construyendo{" "}
-            <HoverWord card={{ caption: "Diseño de productos", bg: "rgba(26,26,10,0.12)", image: "/assets/projects/art-stgo-cover.jpg" }}>
-              productos digitales
-            </HoverWord>
-            , con un background profundo en{" "}
-            <HoverWord card={{ caption: "UI, UX y Diseño de Productos", bg: "rgba(26,26,10,0.12)", image: "/assets/projects/general-focus.jpg" }}>
-              diseño
-            </HoverWord>
-            .
-          </p>
+          <div className="w-full md:w-[70%] space-y-8 text-2xl font-normal leading-snug text-[#1a1a0a] lg:text-[1.9rem]">
+            <p>
+              {t.rich("p1", {
+                products: (chunks) => (
+                  <HoverWord
+                    card={{
+                      caption: t("p1_products_caption"),
+                      bg: "rgba(26,26,10,0.12)",
+                      image: "/assets/projects/art-stgo-cover.jpg",
+                    }}
+                  >
+                    {chunks}
+                  </HoverWord>
+                ),
+                design: (chunks) => (
+                  <HoverWord
+                    card={{
+                      caption: t("p1_design_caption"),
+                      bg: "rgba(26,26,10,0.12)",
+                      image: "/assets/projects/general-focus.jpg",
+                    }}
+                  >
+                    {chunks}
+                  </HoverWord>
+                ),
+              })}
+            </p>
 
-          <p>
-            He liderado proyectos para marcas en hotelería, retail, telecomunicaciones, minería y
-            entretenimiento. Soy fundador de{" "}
-            <HoverWord card={{ caption: "Hyper™ Branding Agency", bg: "#fff414", image: "/assets/hyper.jpg" }}>
-              Hyper™
-            </HoverWord>
-            , donde opero como desarrollador y product owner.
-          </p>
+            <p>
+              {t.rich("p2", {
+                hyper: (chunks) => (
+                  <HoverWord
+                    card={{
+                      caption: t("p2_hyper_caption"),
+                      bg: "#fff414",
+                      image: "/assets/hyper.jpg",
+                    }}
+                  >
+                    {chunks}
+                  </HoverWord>
+                ),
+              })}
+            </p>
 
-          <p>
-            Lo que más me define es que en mis proyectos todo converge: marcas que funcionan,
-            interfaces que se sienten bien y tecnologías que sostienen todo eso.
-          </p>
-        </div>
+            <p>{t("p3")}</p>
+          </div>
         </div>
       </motion.section>
     </div>

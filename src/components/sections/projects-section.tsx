@@ -1,9 +1,9 @@
 "use client"
 
 import Image from "next/image"
+import { useLocale, useTranslations } from "next-intl"
 import { MotionFadeUp } from "@/components/motion/fade-up"
-import { projects } from "@/data/projects"
-
+import { getProjects } from "@/data/projects"
 
 function ArrowIcon({ className }: { className?: string }) {
   return (
@@ -21,7 +21,9 @@ function ArrowIcon({ className }: { className?: string }) {
   )
 }
 
-function ProjectCard({ project }: { project: (typeof projects)[number] }) {
+type Project = ReturnType<typeof getProjects>[number]
+
+function ProjectCard({ project }: { project: Project }) {
   return (
     <a
       href={project.url}
@@ -74,12 +76,16 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
 }
 
 export function ProjectsSection() {
+  const t = useTranslations("projects")
+  const locale = useLocale()
+  const projects = getProjects(locale)
+
   return (
     <section id="proyectos" data-header-theme="dark" className="px-6 py-16 lg:px-6 lg:py-24">
       <div className="mx-auto w-full max-w-[1920px]">
         <MotionFadeUp>
           <h2 className="mb-8 text-4xl font-normal tracking-tight lg:text-5xl">
-            Proyectos recientes
+            {t("section_title")}
           </h2>
         </MotionFadeUp>
 

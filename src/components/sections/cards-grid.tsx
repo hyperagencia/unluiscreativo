@@ -4,8 +4,9 @@ import * as React from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { createPortal } from "react-dom"
+import { useLocale, useTranslations } from "next-intl"
 import { stopLenis, startLenis } from "@/components/motion/smooth-scroll"
-import { experience } from "@/data/experience"
+import { getExperience } from "@/data/experience"
 
 /* ─── Inline SVG icons ───────────────────────────────── */
 
@@ -44,49 +45,23 @@ function CloseIcon({ className }: { className?: string }) {
 /* ─── Drawer content: Stack ──────────────────────────── */
 
 const STACK_GROUPS = [
-  {
-    label: "Frontend",
-    items: ["React", "Next.js", "Vite", "JavaScript", "TypeScript", "Tailwind", "HTML / CSS"],
-  },
-  {
-    label: "Backend & Infra",
-    items: ["Node.js", "Git / GitHub", "PHP", "Firebase", "REST APIs", "PostgreSQL", "Supabase", "Vercel", "Cloudinary"],
-  },
-  {
-    label: "CMS & E-commerce",
-    items: ["WordPress", "Webflow", "Shopify", "Sanity"],
-  },
-  {
-    label: "UI/UX & Product",
-    items: ["Figma", "Design Systems", "Wireframing", "Prototyping"],
-  },
-  {
-    label: "AI & Workflow",
-    items: ["Claude", "Cursor", "VSCode", "Notion", "Monday"],
-  },
-  {
-    label: "Visual & Motion",
-    items: ["Adobe Ai", "Adobe Ps", "Adobe Pr", "Adobe Ae", "Adobe Lr", "Davinci Resolve"],
-  },
+  { label: "Frontend", items: ["React", "Next.js", "Vite", "JavaScript", "TypeScript", "Tailwind", "HTML / CSS"] },
+  { label: "Backend & Infra", items: ["Node.js", "Git / GitHub", "PHP", "Firebase", "REST APIs", "PostgreSQL", "Supabase", "Vercel", "Cloudinary"] },
+  { label: "CMS & E-commerce", items: ["WordPress", "Webflow", "Shopify", "Sanity"] },
+  { label: "UI/UX & Product", items: ["Figma", "Design Systems", "Wireframing", "Prototyping"] },
+  { label: "AI & Workflow", items: ["Claude", "Cursor", "VSCode", "Notion", "Monday"] },
+  { label: "Visual & Motion", items: ["Adobe Ai", "Adobe Ps", "Adobe Pr", "Adobe Ae", "Adobe Lr", "Davinci Resolve"] },
 ]
 
 function StackContent() {
   return (
     <div className="flex flex-col gap-3">
       {STACK_GROUPS.map((group) => (
-        <div
-          key={group.label}
-          className="rounded-[14px] bg-[#191919] px-5 py-5"
-        >
-          <p className="mb-6 text-lg font-normal text-white">
-            {group.label}
-          </p>
+        <div key={group.label} className="rounded-[14px] bg-[#191919] px-5 py-5">
+          <p className="mb-6 text-lg font-normal text-white">{group.label}</p>
           <div className="flex flex-wrap gap-2">
             {group.items.map((item) => (
-              <span
-                key={item}
-                className="rounded-[6px] bg-white/8 px-2.5 py-1 text-sm text-white/80"
-              >
+              <span key={item} className="rounded-[6px] bg-white/8 px-2.5 py-1 text-sm text-white/80">
                 {item}
               </span>
             ))}
@@ -100,6 +75,9 @@ function StackContent() {
 /* ─── Drawer content: Experiencia ───────────────────── */
 
 function ExperienceContent() {
+  const locale = useLocale()
+  const experience = getExperience(locale)
+
   return (
     <div className="flex flex-col gap-4">
       {experience.map((item) => (
@@ -109,8 +87,7 @@ function ExperienceContent() {
           style={
             item.current
               ? {
-                  background:
-                    "linear-gradient(to bottom, #111111 0%, #111111 70%, #2f2f2f 85%, #fff414 110%)",
+                  background: "linear-gradient(to bottom, #111111 0%, #111111 70%, #2f2f2f 85%, #fff414 110%)",
                   boxShadow: "inset 0 0 20px rgba(255,244,20,0.25)",
                 }
               : { background: "#191919" }
@@ -135,11 +112,13 @@ function ExperienceContent() {
 /* ─── Drawer content: Sobre mí ───────────────────────── */
 
 function SobreMiContent() {
+  const t = useTranslations("drawer_about")
+
   return (
     <div className="flex flex-col gap-8">
       <div className="relative aspect-4/3 w-full overflow-hidden rounded-[12px]">
         <Image
-          src="/assets/luis-pp2.jpg"
+          src="/assets/luis-pp.jpg"
           alt="Luis García"
           fill
           sizes="(max-width: 768px) 100vw, 40vw"
@@ -147,27 +126,25 @@ function SobreMiContent() {
         />
       </div>
 
-      {/* Datos personales */}
       <div>
-        <h3 className="mb-4 text-xl font-medium text-white">Datos personales</h3>
+        <h3 className="mb-4 text-xl font-medium text-white">{t("personal_title")}</h3>
         <div className="space-y-1 text-sm text-white/60">
-          <p>18/08/1992 (33 años)</p>
+          <p>{t("dob")}</p>
           <p>luis@hyperagencia.com</p>
-          <p><a href="tel:+56956004615" className="text-white/60 hover:text-white cursor-pointer">Llámame aquí</a> · Ubicación: Las Condes</p>
+          <p>{t("call")} · {t("location")}</p>
         </div>
       </div>
 
-      {/* Estudios */}
       <div>
-        <h3 className="mb-4 text-xl font-medium text-white">Estudios</h3>
+        <h3 className="mb-4 text-xl font-medium text-white">{t("studies_title")}</h3>
         <div className="space-y-5">
           <div>
-            <p className="text-sm font-medium text-white">Lic. Análisis de Sistemas</p>
-            <p className="mt-0.5 text-sm text-white/60">Universidad Nacional Experimental de Guayana (UNEG), Venezuela (2009–2014)</p>
+            <p className="text-sm font-medium text-white">{t("degree1_title")}</p>
+            <p className="mt-0.5 text-sm text-white/60">{t("degree1_school")}</p>
           </div>
           <div>
-            <p className="text-sm font-medium text-white">Diseño Gráfico</p>
-            <p className="mt-0.5 text-sm text-white/60">Instituto Tecnológico Amazonas (IAMZ), Pto. Ordaz, Venezuela (2011–2015)</p>
+            <p className="text-sm font-medium text-white">{t("degree2_title")}</p>
+            <p className="mt-0.5 text-sm text-white/60">{t("degree2_school")}</p>
           </div>
         </div>
       </div>
@@ -184,6 +161,7 @@ interface DrawerProps {
 }
 
 function Drawer({ open, onClose, children }: DrawerProps) {
+  const t = useTranslations("cards")
   const [mounted, setMounted] = React.useState(false)
   const panelRef = React.useRef<HTMLDivElement>(null)
   const mobilePanelRef = React.useRef<HTMLDivElement>(null)
@@ -193,7 +171,6 @@ function Drawer({ open, onClose, children }: DrawerProps) {
   React.useEffect(() => {
     if (open) {
       stopLenis()
-
       const onWheel = (e: WheelEvent) => {
         const desktop = panelRef.current
         const mobile = mobilePanelRef.current
@@ -219,7 +196,6 @@ function Drawer({ open, onClose, children }: DrawerProps) {
     <AnimatePresence>
       {open && (
         <>
-          {/* Overlay */}
           <motion.div
             className="fixed inset-0 z-[99] bg-black/50 backdrop-blur-md"
             initial={{ opacity: 0 }}
@@ -229,7 +205,6 @@ function Drawer({ open, onClose, children }: DrawerProps) {
             onClick={onClose}
           />
 
-          {/* Desktop drawer + close btn */}
           <motion.div
             className="fixed top-[4%] right-[4%] bottom-[4%] z-[100] hidden w-[40%] gap-3 md:flex h-[92vh]"
             initial={{ x: "110%" }}
@@ -237,22 +212,18 @@ function Drawer({ open, onClose, children }: DrawerProps) {
             exit={{ x: "110%" }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* Close button — left of drawer */}
             <button
               onClick={onClose}
               className="group self-start mt-1 shrink-0 rounded-[15px] bg-[#fff414] p-2.5 text-[#0a0a0a] transition-colors duration-150 hover:bg-[#0a0a0a] hover:text-[#fff414]"
-              aria-label="Cerrar"
+              aria-label={t("close")}
             >
               <CloseIcon className="size-5" />
             </button>
-
-            {/* Panel */}
             <div ref={panelRef} className="flex-1 min-h-0 overflow-y-scroll rounded-[25px] bg-[#2f2f2f] p-8 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/20">
               {children}
             </div>
           </motion.div>
 
-          {/* Mobile drawer (full screen) */}
           <motion.div
             className="fixed inset-0 z-[100] flex flex-col bg-[#2f2f2f] md:hidden"
             initial={{ x: "100%" }}
@@ -260,18 +231,15 @@ function Drawer({ open, onClose, children }: DrawerProps) {
             exit={{ x: "100%" }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* Close button — fixed at top, always visible */}
             <div className="flex shrink-0 justify-end p-6 pb-0">
               <button
                 onClick={onClose}
                 className="group rounded-[15px] bg-[#fff414] p-2.5 text-[#0a0a0a] transition-colors duration-150 hover:bg-[#0a0a0a] hover:text-[#fff414]"
-                aria-label="Cerrar"
+                aria-label={t("close")}
               >
                 <CloseIcon className="size-5" />
               </button>
             </div>
-
-            {/* Scrollable content */}
             <div ref={mobilePanelRef} className="flex-1 overflow-y-auto p-6 pt-4">
               {children}
             </div>
@@ -315,24 +283,25 @@ function CardItem({ title, description, onClick }: CardItemProps) {
 /* ─── CardsGrid ──────────────────────────────────────── */
 
 export function CardsGrid() {
+  const t = useTranslations("cards")
   const [open, setOpen] = React.useState<"sobre-mi" | "stack" | "experiencia" | null>(null)
 
   return (
     <section id="cards" className="px-4 py-6 lg:px-6">
       <div className="mx-auto grid w-full max-w-[1920px] grid-cols-1 gap-4 md:grid-cols-3">
         <CardItem
-          title="Un poco sobre mí"
-          description="Datos personales e información sobre estudios académicos"
+          title={t("about_title")}
+          description={t("about_desc")}
           onClick={() => setOpen("sobre-mi")}
         />
         <CardItem
-          title="Stack"
-          description="Tecnologías en las que he tenido experiencias y las que uso día a día"
+          title={t("stack_title")}
+          description={t("stack_desc")}
           onClick={() => setOpen("stack")}
         />
         <CardItem
-          title="Experiencia laboral"
-          description="Trayectoria profesional y empresas donde he trabajado"
+          title={t("experience_title")}
+          description={t("experience_desc")}
           onClick={() => setOpen("experiencia")}
         />
       </div>
@@ -340,11 +309,9 @@ export function CardsGrid() {
       <Drawer open={open === "sobre-mi"} onClose={() => setOpen(null)}>
         <SobreMiContent />
       </Drawer>
-
       <Drawer open={open === "stack"} onClose={() => setOpen(null)}>
         <StackContent />
       </Drawer>
-
       <Drawer open={open === "experiencia"} onClose={() => setOpen(null)}>
         <ExperienceContent />
       </Drawer>
