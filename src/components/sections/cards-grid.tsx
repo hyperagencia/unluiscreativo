@@ -50,7 +50,7 @@ const STACK_GROUPS = [
   { label: "CMS & E-commerce", items: ["WordPress", "Webflow", "Shopify", "Sanity"] },
   { label: "UI/UX & Product", items: ["Figma", "Design Systems", "Wireframing", "Prototyping"] },
   { label: "AI & Workflow", items: ["Claude", "Cursor", "VSCode", "Notion", "Monday"] },
-  { label: "Visual & Motion", items: ["Adobe Ai", "Adobe Ps", "Adobe Pr", "Adobe Ae", "Adobe Lr", "Davinci Resolve"] },
+  { label: "Testing & Analytics", items: ["Vitest", "Playwright E2E", "PostHog", "GA4"] },
 ]
 
 function StackContent() {
