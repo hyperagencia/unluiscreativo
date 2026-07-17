@@ -1,10 +1,10 @@
 "use client"
 
 import * as React from "react"
-import Image from "next/image"
 import { motion } from "framer-motion"
 import { useTranslations } from "next-intl"
 import { usePreloaderDone } from "@/components/motion/preloader"
+import { DottedGlowBackground } from "@/components/ui/dotted-glow-background"
 
 export function Hero() {
   const t = useTranslations("hero")
@@ -18,7 +18,19 @@ export function Hero() {
       data-header-theme="dark"
       className="relative min-h-screen overflow-hidden"
     >
-      <div className="mx-auto grid min-h-screen w-full max-w-[1920px] grid-cols-1 md:grid-cols-2">
+      <DottedGlowBackground
+        className="pointer-events-none absolute inset-0 z-0 mask-radial-to-90% mask-radial-at-center"
+        gap={14}
+        radius={1.4}
+        color="rgba(255,255,255,0.35)"
+        glowColor="#fff414"
+        opacity={0.7}
+        backgroundOpacity={0}
+        speedMin={0.3}
+        speedMax={1.4}
+        speedScale={1}
+      />
+      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1920px] grid-cols-1 md:grid-cols-2">
         {/* Left column */}
         <div className="relative z-10 flex flex-col px-6 pb-10 pt-20 lg:px-12 lg:pt-24">
           {/* Title — vertically centered */}
@@ -52,20 +64,6 @@ export function Hero() {
             <p className="max-w-[280px] text-lg leading-snug text-white/50 sm:text-xl">
               {t("tagline")}
             </p>
-          </div>
-        </div>
-
-        {/* Right column — photo */}
-        <div className="relative hidden md:block">
-          <div className="absolute inset-x-[15%] bottom-0 top-[5%]">
-            <Image
-              src="/assets/luis-foto.webp"
-              alt="Luis García"
-              fill
-              className="object-contain object-bottom"
-              sizes="35vw"
-              priority
-            />
           </div>
         </div>
       </div>
